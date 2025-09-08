@@ -13,10 +13,15 @@ const sequelize = new Sequelize(
   }
 );
 
+
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('Conexión a la base de datos PostgreSQL exitosa.');
+    
+    // Sincronizar los modelos con la base de datos
+    await sequelize.sync({ alter: true });
+    console.log('Modelos sincronizados con la base de datos.');
   } catch (error) {
     console.error('Error al conectar a la base de datos:', error);
     process.exit(1); // Sale de la aplicación si hay un error de conexión
